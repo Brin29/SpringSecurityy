@@ -41,7 +41,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .forEach(permissionEntity -> authorityList.add(new SimpleGrantedAuthority(permissionEntity.getName())));
 
         return new User(userEntity.getUsername(),
-                userEntity.getPassword(),
+                userEntity.getPassword(), 
                 userEntity.isEnabled(),
                 userEntity.isAccountNoExpired(),
                 userEntity.isCredentialsNoExpired(),
