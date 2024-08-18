@@ -74,7 +74,7 @@ public class SpringSecurityAppApplication {
 			/* CREATE USERS */
 			UserEntity userSantiago = UserEntity.builder()
 					.username("santiago")
-					.password("1234")
+					.password("$2a$10$mVnsBqPjwQ9N0z1.whESAeHAeuyakHCApxU8MRFcK5/VaD36s9a3G")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -84,7 +84,7 @@ public class SpringSecurityAppApplication {
 
 			UserEntity userDaniel = UserEntity.builder()
 					.username("Daniel")
-					.password("1234")
+					.password("$2a$10$mVnsBqPjwQ9N0z1.whESAeHAeuyakHCApxU8MRFcK5/VaD36s9a3G")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -94,7 +94,7 @@ public class SpringSecurityAppApplication {
 
 			UserEntity userAndrea = UserEntity.builder()
 					.username("andrea")
-					.password("1234")
+					.password("$2a$10$mVnsBqPjwQ9N0z1.whESAeHAeuyakHCApxU8MRFcK5/VaD36s9a3G")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)
@@ -104,7 +104,7 @@ public class SpringSecurityAppApplication {
 
 			UserEntity userBreiner = UserEntity.builder()
 					.username("breiner")
-					.password("1234")
+					.password("$2a$10$mVnsBqPjwQ9N0z1.whESAeHAeuyakHCApxU8MRFcK5/VaD36s9a3G")
 					.isEnabled(true)
 					.accountNoExpired(true)
 					.accountNoLocked(true)

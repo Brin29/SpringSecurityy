@@ -1,5 +1,6 @@
 package com.app.config.security;
 
+import com.app.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -35,7 +37,7 @@ public class SecurityConfig {
 
     // Filtros
     // httpSecurity: objeto que pasa por los filtros
-    /*@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // csrf =  falsificación de petición en sitios cruzados vulnerabilidad
         // trabajar la aplicacion sin estado
@@ -47,10 +49,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
                     // Configurar EndPoints publicos
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
 
                     // Configurar EndPoints Privados
-                    http.requestMatchers(HttpMethod.GET, "auth/hello-secured").hasAuthority("CREATE");
+                    http.requestMatchers(HttpMethod.POST, "auth/post").hasAnyAuthority("CREATE", "READ");
+
+
 
                     // denyAll y autentichated
                     // Rechaza todo endpoint
@@ -62,10 +66,9 @@ public class SecurityConfig {
 
                 })
                 .build();
-    } */
+    }
 
-
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
@@ -74,6 +77,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
+     */
 
     // AuthenticationManagmet= administra la autentificacion
     @Bean
@@ -83,25 +87,31 @@ public class SecurityConfig {
 
     // Proveedor de autenticacion
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailServiceImpl) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailServiceImpl);
 
         return provider;
     }
 
-    @Bean
+    //@Bean
     public PasswordEncoder passwordEncoder() {
         // NoOpPasswordEncoder = retorna una contraseña no encriptada, PARA PRUEBAS
-        return NoOpPasswordEncoder.getInstance();
+        // return NoOpPasswordEncoder.getInstance();
+
+        return new BCryptPasswordEncoder();
 
         // Esto si encripta las contraseñas
         // return BCryptPasswordEncoder();
     }
 
-    @Bean
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("1234"));
+    }
+
+    /*@Bean
     public UserDetailsService userDetailsService() {
         // Spring valida los usuarios a travez de UserDetails
         // Cuando traemos los datos de la base de datos se debe convertir en un UserDetails
@@ -125,4 +135,6 @@ public class SecurityConfig {
 
 
     }
+
+     */
 }
